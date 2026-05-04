@@ -4,6 +4,7 @@ export default defineConfig({
   title: 'AppTimer',
   description: 'Windows 程序使用时间追踪器',
   lang: 'zh-CN',
+  base: '/apptimer/',
 
   themeConfig: {
     logo: null,
