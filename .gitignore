@@ -1,0 +1,12 @@
+node_modules/
+__pycache__/
+.claude/
+.mcp.json
+build/
+dist/
+*.spec
+website/.vitepress/cache/
+website/.vitepress/dist/
+成品/
+源代码/
+终端报错.txt
