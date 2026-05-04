@@ -1,0 +1,1 @@
+import{_ as l,o as i,c as e,ag as t}from"./chunks/framework.B4u4rdkN.js";const u=JSON.parse('{"title":"更新日志","description":"","frontmatter":{},"headers":[],"relativePath":"changelog.md","filePath":"changelog.md"}'),o={name:"changelog.md"};function r(n,a,s,h,c,d){return i(),e("div",null,[...a[0]||(a[0]=[t("",7)])])}const m=l(o,[["render",r]]);export{u as __pageData,m as default};
