@@ -52,9 +52,9 @@ hero:
   }
 
   .VPHero {
-    margin-left: 0 !important; margin-top: 52vh !important;
+    margin-left: 0 !important; margin-top: 46vh !important;
     width: 100vw !important;
-    height: auto; min-height: 48vh;
+    height: auto;
     display: flex; align-items: center;
     padding: 1rem 1.5rem;
   }
