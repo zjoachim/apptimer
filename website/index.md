@@ -21,8 +21,6 @@ hero:
   --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #aaa, #fff);
 }
 
-html, body { overflow: hidden; height: 100vh; }
-
 #hero-clock-canvas {
   position: fixed; left: 0; top: 0;
   width: 67vw; height: 100vh;

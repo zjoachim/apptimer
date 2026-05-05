@@ -6,12 +6,20 @@ export default {
   enhanceApp({ router }) {
     if (typeof window === 'undefined') return
 
-    // ── 页面切换过渡 ──
+    function toggleCanvas(path) {
+      const c = document.getElementById('hero-clock-canvas')
+      if (c) c.style.display = (path === '/') ? 'block' : 'none'
+    }
+
+    // 初始设置
+    setTimeout(() => toggleCanvas(router.route.path), 50)
+
+    // 页面切换过渡 + 画布显隐
     router.onBeforeRouteChange = () => {
       const el = document.querySelector('.VPContent')
       if (el) { el.style.opacity = '0'; el.style.transform = 'translateY(4px)'; el.style.transition = 'none' }
     }
-    router.onAfterRouteChanged = () => {
+    router.onAfterRouteChanged = (to) => {
       const el = document.querySelector('.VPContent')
       if (el) {
         requestAnimationFrame(() => {
@@ -19,12 +27,15 @@ export default {
           el.style.opacity = '1'; el.style.transform = 'translateY(0)'
         })
       }
-      // 路由显隐画布
-      const canvas = document.getElementById('hero-clock-canvas')
-      if (canvas) canvas.style.display = (router.route.path === '/') ? 'block' : 'none'
+      toggleCanvas(to)
+      // 非首页恢复滚动
+      if (to !== '/') {
+        document.documentElement.style.overflow = ''
+        document.body.style.overflow = ''
+      }
     }
 
-    // ── Three.js 画布，常驻 ──
+    // ── Three.js 常驻 ──
     if (document.getElementById('hero-clock-canvas')) return
 
     import('https://unpkg.com/three@0.160.0/build/three.module.js').then(THREE => {
@@ -37,6 +48,7 @@ export default {
       renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
       const canvas = renderer.domElement
       canvas.id = 'hero-clock-canvas'
+      canvas.style.display = router.route.path === '/' ? 'block' : 'none'
       document.body.prepend(canvas)
 
       function ptsFrom(geo, n) {
@@ -67,7 +79,6 @@ export default {
       const clk = new THREE.Clock()
       ;(function loop() {
         requestAnimationFrame(loop)
-        if (canvas.style.display === 'none') { renderer.render(scene, cam); return } // 隐藏时少渲
         const t = clk.getElapsedTime()
         ringGroups.forEach((g,i) => {
           g.rotation.x += 0.002 + i*0.0012
