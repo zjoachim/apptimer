@@ -3,36 +3,8 @@ import './style.css'
 
 export default {
   extends: DefaultTheme,
-  enhanceApp({ router }) {
+  enhanceApp() {
     if (typeof window === 'undefined') return
-
-    function setRoute(path) {
-      document.body.classList.toggle('is-home', path === '/')
-    }
-    setRoute(router.route.path)
-
-    // 过渡
-    router.onBeforeRouteChange = () => {
-      const el = document.querySelector('.VPContent')
-      if (el) { el.style.opacity = '0'; el.style.transform = 'translateY(4px)'; el.style.transition = 'none' }
-    }
-    router.onAfterRouteChanged = (to) => {
-      setRoute(to)
-      const el = document.querySelector('.VPContent')
-      if (el) {
-        requestAnimationFrame(() => {
-          el.style.transition = 'opacity 0.25s ease, transform 0.25s ease'
-          el.style.opacity = '1'; el.style.transform = 'translateY(0)'
-        })
-      }
-      // 非首页恢复滚动
-      if (to !== '/') {
-        document.documentElement.style.overflow = ''
-        document.body.style.overflow = ''
-      }
-    }
-
-    // ── Three.js ──
     if (document.getElementById('hero-clock-canvas')) return
 
     import('https://unpkg.com/three@0.160.0/build/three.module.js').then(THREE => {
@@ -85,10 +57,7 @@ export default {
         faceGroup.children[1].rotation.z = t*0.78
         renderer.render(scene, cam)
       })()
-      window.addEventListener('resize', () => {
-        cam.aspect = (innerWidth*0.67) / innerHeight; cam.updateProjectionMatrix()
-        renderer.setSize(innerWidth*0.67, innerHeight)
-      })
+      window.addEventListener('resize', () => { cam.aspect = (innerWidth*0.67)/innerHeight; cam.updateProjectionMatrix(); renderer.setSize(innerWidth*0.67, innerHeight) })
     })
   }
 }

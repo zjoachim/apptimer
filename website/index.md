@@ -25,6 +25,8 @@ hero:
   z-index: 0; pointer-events: none;
 }
 
+.VPHome, .VPHero { background: transparent !important; }
+
 /* 右侧面板居中 */
 .VPHome { max-width: none !important; }
 .VPHero {
