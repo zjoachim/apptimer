@@ -22,8 +22,6 @@ hero:
 }
 
 #hero-clock-canvas {
-  position: fixed; left: 0; top: 0;
-  width: 67vw; height: 100vh;
   z-index: 0; pointer-events: none;
 }
 
