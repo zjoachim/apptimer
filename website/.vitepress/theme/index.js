@@ -6,22 +6,20 @@ export default {
   enhanceApp({ router }) {
     if (typeof window === 'undefined') return
 
-    function setBodyClass(path) {
-      document.body.classList.remove('is-home', 'is-doc', 'is-source')
-      if (path === '/') document.body.classList.add('is-home')
-      else if (path === '/source') document.body.classList.add('is-source')
-      else document.body.classList.add('is-doc')
+    function toggleCanvas(path) {
+      const c = document.getElementById('hero-clock-canvas')
+      if (c) c.style.display = (path === '/') ? 'block' : 'none'
     }
 
-    setBodyClass(router.route.path)
+    // 初始设置
+    setTimeout(() => toggleCanvas(router.route.path), 50)
 
+    // 页面切换过渡 + 画布显隐
     router.onBeforeRouteChange = () => {
       const el = document.querySelector('.VPContent')
       if (el) { el.style.opacity = '0'; el.style.transform = 'translateY(4px)'; el.style.transition = 'none' }
     }
-
     router.onAfterRouteChanged = (to) => {
-      setBodyClass(to)
       const el = document.querySelector('.VPContent')
       if (el) {
         requestAnimationFrame(() => {
@@ -29,25 +27,31 @@ export default {
           el.style.opacity = '1'; el.style.transform = 'translateY(0)'
         })
       }
+      toggleCanvas(to)
+      // 非首页恢复滚动
       if (to !== '/') {
         document.documentElement.style.overflow = ''
         document.body.style.overflow = ''
       }
     }
 
-    // ── Three.js ──
+    // ── Three.js 常驻 ──
     if (document.getElementById('hero-clock-canvas')) return
 
     import('https://unpkg.com/three@0.160.0/build/three.module.js').then(THREE => {
       const scene = new THREE.Scene()
-      const cam = new THREE.PerspectiveCamera(50, 1, 0.5, 80)
+      const cam = new THREE.PerspectiveCamera(50, (innerWidth*0.67)/innerHeight, 0.5, 80)
       cam.position.set(0, 0, 10)
 
       const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
+      renderer.setSize(innerWidth*0.67, innerHeight)
       renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
       const canvas = renderer.domElement
       canvas.id = 'hero-clock-canvas'
+      canvas.style.display = 'block'
       document.body.prepend(canvas)
+      // 50ms 后根据路由修正
+      setTimeout(() => { canvas.style.display = (router.route.path === '/') ? 'block' : 'none' }, 100)
 
       function ptsFrom(geo, n) {
         const src = geo.getAttribute('position')
@@ -74,19 +78,6 @@ export default {
       for (let i=0; i<12; i++) { const ang=(i/12)*Math.PI*2; const s=new THREE.SphereGeometry(i%3===0?0.08:0.04,8,8); s.translate(Math.cos(ang)*2.4, Math.sin(ang)*2.4,0); sp.push({g:s, n:i%3===0?100:40}) }
       { const t=sp.reduce((s,x)=>s+x.n,0); const p=new Float32Array(t*3); let o=0; for (const {g,n} of sp) { const sg=ptsFrom(g,n); p.set(sg.getAttribute('position').array,o*3); o+=n } const geo=new THREE.BufferGeometry(); geo.setAttribute('position',new THREE.BufferAttribute(p,3)); faceGroup.add(new THREE.Points(geo, faceMat)) }
 
-      function updateSize() {
-        const r = canvas.getBoundingClientRect()
-        if (r.width > 0 && r.height > 0) {
-          cam.aspect = r.width / r.height; cam.updateProjectionMatrix()
-          renderer.setSize(r.width, r.height)
-        }
-      }
-      // 等 CSS 挂上后再取尺寸
-      requestAnimationFrame(() => requestAnimationFrame(updateSize))
-      window.addEventListener('resize', updateSize)
-      canvas.addEventListener('transitionend', updateSize)
-      new ResizeObserver(updateSize).observe(canvas)
-
       const clk = new THREE.Clock()
       ;(function loop() {
         requestAnimationFrame(loop)
@@ -100,6 +91,7 @@ export default {
         faceGroup.children[1].rotation.z = t*0.78
         renderer.render(scene, cam)
       })()
+      window.addEventListener('resize', () => { const w = innerWidth*0.67; cam.aspect = w/innerHeight; cam.updateProjectionMatrix(); renderer.setSize(w, innerHeight) })
     })
   }
 }

@@ -21,7 +21,11 @@ hero:
   --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #aaa, #fff);
 }
 
-.VPHome, .VPHero { background: transparent !important; }
+#hero-clock-canvas {
+  position: fixed; left: 0; top: 0;
+  width: 67vw; height: 100vh;
+  z-index: 0; pointer-events: none;
+}
 
 /* 右侧面板居中 */
 .VPHome { max-width: none !important; }
