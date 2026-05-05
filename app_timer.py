@@ -126,7 +126,7 @@ def get_active_window_process_name():
     path_buf = ctypes.create_unicode_buffer(MAX_PATH)
     path_size = ctypes.wintypes.DWORD(MAX_PATH)
     exe_path = ""
-    if psapi.QueryFullProcessImageNameW(handle, 0, path_buf, ctypes.byref(path_size)):
+    if kernel32.QueryFullProcessImageNameW(handle, 0, path_buf, ctypes.byref(path_size)):
         exe_path = path_buf.value
     kernel32.CloseHandle(handle)
     return name, exe_path

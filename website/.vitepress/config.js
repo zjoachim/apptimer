@@ -8,6 +8,14 @@ export default defineConfig({
 
   appearance: 'dark',
 
+  vite: {
+    build: {
+      rollupOptions: {
+        external: [/^https:\/\/unpkg\.com\/three.*/]
+      }
+    }
+  },
+
   themeConfig: {
     logo: null,
 

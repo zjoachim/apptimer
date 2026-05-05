@@ -1,4 +1,4 @@
-/* ── 鹰角风：极简暗底，几何线条 ── */
+/* ── 鹰角风：极简暗底 ── */
 :root {
   --vp-c-bg: #08080d;
   --vp-c-bg-soft: #0e0e16;
@@ -16,28 +16,22 @@
   --vp-font-family-base: 'Inter','PingFang SC','Microsoft YaHei',sans-serif;
 }
 
-html {
-  scroll-behavior: smooth;
-}
+html { scroll-behavior: smooth; }
 
-/* 导航栏 */
 .VPNavBar { border-bottom: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(12px); }
 .VPNavBarTitle .title { font-weight: 300; letter-spacing: 0.06em; font-size: 0.95rem; }
-
-/* 搜索隐藏 */
 .VPNavBarSearch { display: none !important; }
 
 /* 页面切换 */
 .VPContent { animation: in 0.2s ease; }
 @keyframes in { from { opacity:0; transform:translateY(2px); } to { opacity:1; transform:translateY(0); } }
 
-/* 文档页：加宽 */
+/* 文档页 */
 .vp-doc { max-width: none !important; }
-.vp-doc .container { max-width: 860px; margin: 0 auto; }
 .vp-doc h1 { font-weight: 300; letter-spacing: 0.04em; }
-.vp-doc h2 { font-weight: 300; letter-spacing: 0.03em; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; }
+.vp-doc h2 { font-weight: 300; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; }
 
-/* ── Apple scroll reveal ── */
+/* scroll reveal */
 .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
 .reveal.visible { opacity: 1; transform: translateY(0); }
 
