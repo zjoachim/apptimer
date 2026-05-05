@@ -41,7 +41,11 @@ export default {
       cam.position.set(0, 0, 10)
 
       const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
-      renderer.setSize(innerWidth*0.67, innerHeight)
+      const home = document.body.classList.contains('is-home')
+      const cw = home ? innerWidth*0.67 : 180
+      const ch = home ? innerHeight : 180
+      renderer.setSize(cw, ch)
+      cam.aspect = cw / ch; cam.updateProjectionMatrix()
       renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
       const canvas = renderer.domElement
       canvas.id = 'hero-clock-canvas'
@@ -85,7 +89,16 @@ export default {
         faceGroup.children[1].rotation.z = t*0.78
         renderer.render(scene, cam)
       })()
-      window.addEventListener('resize', () => { const w = innerWidth*0.67; cam.aspect = w/innerHeight; cam.updateProjectionMatrix(); renderer.setSize(w, innerHeight) })
+      function updateSize() {
+        const r = canvas.getBoundingClientRect()
+        if (r.width > 0 && r.height > 0) {
+          cam.aspect = r.width / r.height; cam.updateProjectionMatrix()
+          renderer.setSize(r.width, r.height)
+        }
+      }
+      window.addEventListener('resize', updateSize)
+      // transition 结束后更新尺寸
+      canvas.addEventListener('transitionend', updateSize)
     })
   }
 }
