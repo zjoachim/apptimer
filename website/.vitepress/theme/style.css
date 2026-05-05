@@ -10,28 +10,8 @@
 .VPFeature:hover {
   box-shadow: 0 20px 40px rgba(52, 152, 219, 0.15);
 }
-.VPFeature .box {
-  transition: transform 0.15s ease-out;
-}
 
-/* ========== Hero 3D 时钟画布 ========== */
-#hero-clock-canvas {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  z-index: 0;
-  pointer-events: none;
-}
-.VPHero .container {
-  position: relative;
-}
-.VPHero .main {
-  position: relative;
-  z-index: 1;
-}
-
-/* 小屏隐藏 3D */
+/* 小屏隐藏 3D 时钟 */
 @media (max-width: 768px) {
   #hero-clock-canvas { display: none; }
 }
