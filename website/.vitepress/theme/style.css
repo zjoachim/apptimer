@@ -25,4 +25,24 @@ html { scroll-behavior: smooth; }
 .vp-doc h1 { font-weight: 300; letter-spacing: 0.04em; }
 .vp-doc h2 { font-weight: 300; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; }
 
-@media (max-width: 768px) { #hero-clock-canvas { display: none; } }
+/* ── 移动端适配 ── */
+@media (max-width: 768px) {
+  #hero-clock-canvas { display: none; }
+
+  .VPHero, .VPFeatures, .feature-list {
+    margin-left: 0 !important;
+    width: 100vw !important;
+  }
+  .VPHero {
+    height: auto; min-height: 100vh;
+    padding: 2rem 1.5rem;
+  }
+  .VPHero .name { font-size: 1.8rem !important; }
+  .VPHero .text { font-size: 1rem !important; white-space: normal; }
+  .VPHero .tagline { font-size: 0.8rem !important; }
+
+  .feature-list { padding: 2rem 1.5rem 4rem; }
+
+  .vp-doc { padding: 0 1rem; }
+  .vp-doc h1 { font-size: 1.4rem; }
+}

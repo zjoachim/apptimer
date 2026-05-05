@@ -45,7 +45,14 @@ hero:
 
 @media (max-width: 768px) {
   #hero-clock-canvas { display: none; }
-  .VPHero { margin-left: 0 !important; width: 100vw !important; }
-  html, body { overflow: auto; }
+  .VPHero {
+    margin-left: 0 !important; width: 100vw !important;
+    height: auto; min-height: 100vh; padding: 2rem 1.5rem;
+  }
+  .VPHero .name { font-size: 1.8rem !important; }
+  .VPHero .text { font-size: 1rem !important; white-space: normal !important; margin-left: 0 !important; }
+  .VPHero .tagline { font-size: 0.8rem !important; }
+  .feature-list { margin-left: 0 !important; width: 100vw !important; padding: 2rem 1.5rem 4rem; }
+  html, body { overflow: auto !important; }
 }
 </style>
