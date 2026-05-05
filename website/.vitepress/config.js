@@ -16,7 +16,7 @@ export default defineConfig({
       { text: '更新日志', link: '/changelog' },
       {
         text: '下载',
-        link: '/AppTimer.exe',
+        link: '/apptimer/AppTimer.exe',
       },
     ],
 
