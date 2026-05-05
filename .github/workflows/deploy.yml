@@ -24,7 +24,7 @@ jobs:
         working-directory: website
 
       - name: Build
-        run: npm run build
+        run: npx vitepress build --base /apptimer/
         working-directory: website
 
       - uses: actions/configure-pages@v4
