@@ -1,17 +1,18 @@
-/* ========== 隐藏搜索 ========== */
+/* ── 搜素隐藏 ── */
 .VPNavBarSearch { display: none !important; }
 
-/* ========== 3D 卡片倾斜 ========== */
+/* ── 页面切换过渡 ── */
+.VPContent { animation: fadeIn 0.25s ease; }
+@keyframes fadeIn { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ── 卡片倾斜过渡 ── */
 .VPFeature {
-  transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+  transition: transform 0.4s ease-out;
   transform-style: preserve-3d;
   perspective: 1000px;
 }
-.VPFeature:hover {
-  box-shadow: 0 20px 40px rgba(52, 152, 219, 0.15);
-}
 
-/* 小屏隐藏 3D 时钟 */
+/* 小屏隐藏画布 */
 @media (max-width: 768px) {
   #hero-clock-canvas { display: none; }
 }
