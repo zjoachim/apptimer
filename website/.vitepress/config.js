@@ -25,6 +25,7 @@ export default defineConfig({
       { text: '常见问题', link: '/faq' },
       { text: '更新日志', link: '/changelog' },
       { text: '源代码', link: '/source' },
+      { text: '反馈', link: 'https://github.com/zjoachim/apptimer/issues' },
       {
         text: '下载',
         link: '/apptimer/AppTimer.exe',

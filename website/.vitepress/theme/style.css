@@ -2,11 +2,8 @@
 :root {
   --vp-c-bg: #08080d;
   --vp-c-bg-soft: #0e0e16;
-  --vp-c-bg-mute: #14141e;
-  --vp-c-bg-alt: #08080d;
   --vp-c-text-1: rgba(255,255,255,0.85);
   --vp-c-text-2: rgba(255,255,255,0.45);
-  --vp-c-border: rgba(255,255,255,0.06);
   --vp-c-brand-1: #fff;
   --vp-c-brand-2: #ccc;
   --vp-c-brand-3: #fff;
@@ -17,24 +14,14 @@
 }
 
 html { scroll-behavior: smooth; }
-
 .VPNavBar { border-bottom: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(12px); }
 .VPNavBarTitle .title { font-weight: 300; letter-spacing: 0.06em; font-size: 0.95rem; }
 .VPNavBarSearch { display: none !important; }
 
-/* 页面切换 */
-.VPContent { animation: in 0.2s ease; }
-@keyframes in { from { opacity:0; transform:translateY(2px); } to { opacity:1; transform:translateY(0); } }
+.VPContent { transition: opacity 0.25s ease, transform 0.25s ease; }
 
-/* 文档页 */
 .vp-doc { max-width: none !important; }
 .vp-doc h1 { font-weight: 300; letter-spacing: 0.04em; }
 .vp-doc h2 { font-weight: 300; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; }
 
-/* scroll reveal */
-.reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s ease, transform 0.5s ease; }
-.reveal.visible { opacity: 1; transform: translateY(0); }
-
-@media (max-width: 768px) {
-  #hero-clock-canvas { display: none; }
-}
+@media (max-width: 768px) { #hero-clock-canvas { display: none; } }
