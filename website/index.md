@@ -47,15 +47,16 @@ hero:
   html, body { overflow: auto !important; }
 
   #hero-clock-canvas {
-    width: 100vw !important; height: 55vh !important;
+    width: 100vw !important; height: 50vh !important;
     top: 0; left: 0;
   }
 
   .VPHero {
-    margin-left: 0 !important; width: 100vw !important;
-    height: auto; min-height: auto;
-    padding: 58vh 1.5rem 3rem;
-    display: block;
+    margin-left: 0 !important; margin-top: 52vh !important;
+    width: 100vw !important;
+    height: auto; min-height: 48vh;
+    display: flex; align-items: center;
+    padding: 1rem 1.5rem;
   }
   .VPHero .name { font-size: 1.8rem !important; }
   .VPHero .text { font-size: 1rem !important; white-space: normal !important; margin-left: 0 !important; }
