@@ -6,20 +6,18 @@ export default {
   enhanceApp({ router }) {
     if (typeof window === 'undefined') return
 
-    function toggleCanvas(path) {
-      const c = document.getElementById('hero-clock-canvas')
-      if (c) c.style.display = (path === '/') ? 'block' : 'none'
+    function setRoute(path) {
+      document.body.classList.toggle('is-home', path === '/')
     }
+    setRoute(router.route.path)
 
-    // 初始设置
-    setTimeout(() => toggleCanvas(router.route.path), 50)
-
-    // 页面切换过渡 + 画布显隐
+    // 过渡
     router.onBeforeRouteChange = () => {
       const el = document.querySelector('.VPContent')
       if (el) { el.style.opacity = '0'; el.style.transform = 'translateY(4px)'; el.style.transition = 'none' }
     }
     router.onAfterRouteChanged = (to) => {
+      setRoute(to)
       const el = document.querySelector('.VPContent')
       if (el) {
         requestAnimationFrame(() => {
@@ -27,7 +25,6 @@ export default {
           el.style.opacity = '1'; el.style.transform = 'translateY(0)'
         })
       }
-      toggleCanvas(to)
       // 非首页恢复滚动
       if (to !== '/') {
         document.documentElement.style.overflow = ''
@@ -35,7 +32,7 @@ export default {
       }
     }
 
-    // ── Three.js 常驻 ──
+    // ── Three.js ──
     if (document.getElementById('hero-clock-canvas')) return
 
     import('https://unpkg.com/three@0.160.0/build/three.module.js').then(THREE => {
@@ -48,7 +45,6 @@ export default {
       renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
       const canvas = renderer.domElement
       canvas.id = 'hero-clock-canvas'
-      canvas.style.display = router.route.path === '/' ? 'block' : 'none'
       document.body.prepend(canvas)
 
       function ptsFrom(geo, n) {
