@@ -122,12 +122,19 @@ def get_active_window_process_name():
     name = ""
     if psapi.GetModuleBaseNameW(handle, None, name_buf, name_size):
         name = name_buf.value.lower()
-    # 完整路径
+    # 完整路径（兼容不同 Windows 版本：kernel32 为主，psapi 兜底）
     path_buf = ctypes.create_unicode_buffer(MAX_PATH)
     path_size = ctypes.wintypes.DWORD(MAX_PATH)
     exe_path = ""
-    if kernel32.QueryFullProcessImageNameW(handle, 0, path_buf, ctypes.byref(path_size)):
-        exe_path = path_buf.value
+    try:
+        if kernel32.QueryFullProcessImageNameW(handle, 0, path_buf, ctypes.byref(path_size)):
+            exe_path = path_buf.value
+    except Exception:
+        try:
+            if psapi.QueryFullProcessImageNameW(handle, 0, path_buf, ctypes.byref(path_size)):
+                exe_path = path_buf.value
+        except Exception:
+            pass
     kernel32.CloseHandle(handle)
     return name, exe_path
 
