@@ -14,6 +14,7 @@ export default defineConfig({
       { text: '使用指南', link: '/guide' },
       { text: '常见问题', link: '/faq' },
       { text: '更新日志', link: '/changelog' },
+      { text: '源代码', link: '/source' },
       {
         text: '下载',
         link: '/apptimer/AppTimer.exe',
@@ -43,8 +44,6 @@ export default defineConfig({
       copyright: 'Copyright © 2026',
     },
 
-    search: {
-      provider: 'local',
-    },
+
   },
 })

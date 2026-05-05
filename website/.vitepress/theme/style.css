@@ -1,0 +1,37 @@
+/* ========== 隐藏搜索 ========== */
+.VPNavBarSearch { display: none !important; }
+
+/* ========== 3D 卡片倾斜 ========== */
+.VPFeature {
+  transition: transform 0.4s ease-out, box-shadow 0.4s ease-out;
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+.VPFeature:hover {
+  box-shadow: 0 20px 40px rgba(52, 152, 219, 0.15);
+}
+.VPFeature .box {
+  transition: transform 0.15s ease-out;
+}
+
+/* ========== Hero 3D 时钟画布 ========== */
+#hero-clock-canvas {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 0;
+  pointer-events: none;
+}
+.VPHero .container {
+  position: relative;
+}
+.VPHero .main {
+  position: relative;
+  z-index: 1;
+}
+
+/* 小屏隐藏 3D */
+@media (max-width: 768px) {
+  #hero-clock-canvas { display: none; }
+}
