@@ -17,19 +17,44 @@ html { scroll-behavior: smooth; }
 .VPNavBarTitle .title { font-weight: 300; letter-spacing: 0.06em; font-size: 0.95rem; }
 .VPNavBarSearch { display: none !important; }
 
-#hero-clock-canvas {
-  position: fixed; left: 0; top: 0;
-  width: 67vw; height: 100vh;
-  z-index: 0; pointer-events: none;
-}
-
 .VPContent { transition: opacity 0.25s ease, transform 0.25s ease; }
+.VPContent { background: var(--vp-c-bg); }
+.VPHome .VPContent { background: transparent; }
 
 .vp-doc { max-width: none !important; }
 .vp-doc h1 { font-weight: 300; letter-spacing: 0.04em; }
 .vp-doc h2 { font-weight: 300; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; }
 
-.VPContent { background: var(--vp-c-bg); }
-.VPHome .VPContent { background: transparent; }
+/* ── 三关键帧 ── */
+#hero-clock-canvas {
+  position: fixed;
+  z-index: 0; pointer-events: none;
+  transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
+  /* 默认：文档页右下角 */
+  right: 1.5rem; bottom: 1.5rem;
+  width: 220px; height: 220px;
+  left: auto; top: auto;
+  transform: none;
+  opacity: 0.4;
+  border-radius: 12px;
+}
+
+/* 首页：左 2/3 */
+body.is-home #hero-clock-canvas {
+  left: 0; top: 0;
+  right: auto; bottom: auto;
+  width: 67vw; height: 100vh;
+  opacity: 1;
+  border-radius: 0;
+}
+
+/* 源代码：正中 */
+body.is-source #hero-clock-canvas {
+  left: 50%; top: 50%;
+  transform: translate(-50%, -50%);
+  width: 55vw; height: 55vh;
+  opacity: 0.5;
+  border-radius: 50%;
+}
 
 @media (max-width: 768px) { #hero-clock-canvas { display: none; } }

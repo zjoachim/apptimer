@@ -21,10 +21,6 @@ hero:
   --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #aaa, #fff);
 }
 
-#hero-clock-canvas {
-  z-index: 0; pointer-events: none;
-}
-
 .VPHome, .VPHero { background: transparent !important; }
 
 /* 右侧面板居中 */
