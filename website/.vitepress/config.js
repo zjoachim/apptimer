@@ -6,6 +6,8 @@ export default defineConfig({
   lang: 'zh-CN',
   base: '/apptimer/',
 
+  head: [['link', { rel: 'icon', href: '/apptimer/favicon.svg' }]],
+
   appearance: 'dark',
 
   vite: {
