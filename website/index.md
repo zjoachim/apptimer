@@ -41,60 +41,63 @@ features:
   --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #c0c0c0, #ffffff);
 }
 
-/* ── 画布：上半屏 2/3 ── */
+/* ── 画布：左侧 2/3 ── */
 #hero-clock-canvas {
   position: fixed;
-  top: 0; left: 0;
-  width: 100vw; height: 67vh;
+  left: 0; top: 0;
+  width: 67vw; height: 100vh;
   z-index: 0;
   pointer-events: none;
 }
 
-/* hero 区透明，叠在画布上 */
-.VPHero { background: transparent !important; min-height: 55vh; }
-.VPHero .container { background: transparent; }
-
-/* features 区不透明底，占下半 1/3 */
-.VPFeatures {
-  background: var(--vp-c-bg) !important;
-  position: relative; z-index: 1;
-  margin-top: 55vh;
-  padding-top: 2rem;
-  border-radius: 16px 16px 0 0;
+/* ── 右侧 1/3 放 hero + 卡片 ── */
+.VPHero, .VPFeatures {
+  margin-left: 67vw !important;
+  width: 33vw !important;
 }
+.VPHero { min-height: 100vh; display: flex; align-items: center; }
+.VPHome { max-width: none !important; }
+.VPHero .container { max-width: none !important; margin: 0 2rem; }
 
-/* 卡片：细边框 + 微弱底 */
+/* features 区 */
+.VPFeatures { padding-top: 2rem; padding-bottom: 4rem; }
+.VPFeatures .container { max-width: none !important; margin: 0 1.5rem; }
+.VPFeatures .items { display: flex; flex-direction: column; gap: 0.8rem; }
+
+/* 卡片 */
 .VPFeature .box {
   background: transparent !important;
   border: 1px solid rgba(255,255,255,0.08);
   border-radius: 10px;
-  transition: border-color 0.3s, transform 0.4s ease-out, box-shadow 0.4s ease-out;
+  transition: border-color 0.3s, transform 0.4s ease-out;
 }
-.VPFeature .box:hover {
-  border-color: rgba(255,255,255,0.25);
-}
+.VPFeature .box:hover { border-color: rgba(255,255,255,0.25); }
 
 @media (max-width: 768px) {
   #hero-clock-canvas { display: none; }
-  .VPFeatures { margin-top: 0; }
+  .VPHero, .VPFeatures { margin-left: 0 !important; width: 100vw !important; }
 }
 </style>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, onUnmounted } from 'vue'
+
+let animId = null
 
 onMounted(async () => {
-  // 只在首页跑
   if (!document.querySelector('.VPHome')) return
-  if (document.getElementById('hero-clock-canvas')) return
 
-  // ── 卡片倾斜 ──
+  // 之前隐藏的画布恢复
+  let canvas = document.getElementById('hero-clock-canvas')
+  if (canvas) { canvas.style.display = 'block'; return }
+
+  // ── 卡片 ──
   document.querySelectorAll('.VPFeature').forEach(card => {
     const mv = e => {
       const r = card.getBoundingClientRect()
       const x = (e.clientX - r.left) / r.width - 0.5
       const y = (e.clientY - r.top) / r.height - 0.5
-      card.style.transform = `perspective(1000px) rotateY(${x*10}deg) rotateX(${-y*10}deg) scale3d(1.03,1.03,1.03)`
+      card.style.transform = `perspective(1000px) rotateY(${x*8}deg) rotateX(${-y*8}deg) scale3d(1.02,1.02,1.02)`
     }
     const lv = () => { card.style.transform = 'perspective(1000px) rotateY(0deg) rotateX(0deg) scale3d(1,1,1)' }
     card.addEventListener('mousemove', mv)
@@ -103,94 +106,82 @@ onMounted(async () => {
 
   const THREE = await import('https://unpkg.com/three@0.160.0/build/three.module.js')
   const scene = new THREE.Scene()
-  const cam = new THREE.PerspectiveCamera(50, innerWidth / (innerHeight * 0.67), 0.5, 80)
-  cam.position.set(0, 0.8, 13)
+  const cam = new THREE.PerspectiveCamera(50, (innerWidth*0.67) / innerHeight, 0.5, 80)
+  cam.position.set(0, 0.5, 11)
 
   const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
-  renderer.setSize(innerWidth, innerHeight * 0.67)
+  renderer.setSize(innerWidth * 0.67, innerHeight)
   renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
-  renderer.domElement.id = 'hero-clock-canvas'
-  document.body.prepend(renderer.domElement)
+  canvas = renderer.domElement
+  canvas.id = 'hero-clock-canvas'
+  document.body.prepend(canvas)
 
   function ptsFrom(geo, n) {
     const src = geo.getAttribute('position')
-    const b = new Float32Array(n * 3)
-    for (let i = 0; i < n; i++) { const j = Math.floor(Math.random() * src.count); b[i*3]=src.getX(j); b[i*3+1]=src.getY(j); b[i*3+2]=src.getZ(j) }
-    return new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(b, 3))
+    const b = new Float32Array(n*3)
+    for (let i=0; i<n; i++) { const j=Math.floor(Math.random()*src.count); b[i*3]=src.getX(j); b[i*3+1]=src.getY(j); b[i*3+2]=src.getZ(j) }
+    return new THREE.BufferGeometry().setAttribute('position', new THREE.BufferAttribute(b,3))
   }
 
-  // ── 环组（三根环各自独立）──
+  // 环组
   const ringGroup = new THREE.Group(); scene.add(ringGroup)
-  const ringMat = new THREE.PointsMaterial({ color:0xffffff, size:0.04, transparent:true, opacity:0.6, blending:THREE.AdditiveBlending, depthWrite:false })
-  for (let a = 0; a < 3; a++) {
-    const ring = new THREE.TorusGeometry(2.6, 0.04, 20, 140)
-    ring.rotateX(a * Math.PI / 3)
-    ring.rotateY(a * Math.PI / 4 * a)
-    const sg = ptsFrom(ring, 2000)
-    ringGroup.add(new THREE.Points(sg, ringMat))
+  const ringMat = new THREE.PointsMaterial({ color:0xffffff, size:0.035, transparent:true, opacity:0.55, blending:THREE.AdditiveBlending, depthWrite:false })
+  for (let a=0; a<3; a++) {
+    const ring = new THREE.TorusGeometry(2.4, 0.035, 18, 120)
+    ring.rotateX(a*Math.PI/3); ring.rotateY(a*Math.PI/4)
+    ringGroup.add(new THREE.Points(ptsFrom(ring, 1800), ringMat))
   }
 
-  // ── 表盘组（指针独立 + 刻度中心合并）──
+  // 表盘组
   const faceGroup = new THREE.Group(); scene.add(faceGroup)
   const faceMat = new THREE.PointsMaterial({ color:0xffffff, size:0.04, transparent:true, opacity:0.7, blending:THREE.AdditiveBlending, depthWrite:false })
+  { const h = new THREE.BoxGeometry(0.05, 1.5, 0.05, 2,12,2); h.translate(0,0.75,0); faceGroup.add(new THREE.Points(ptsFrom(h,350), faceMat)) }
+  { const m = new THREE.BoxGeometry(0.035, 2.1, 0.035, 2,16,2); m.translate(0,1.05,0); faceGroup.add(new THREE.Points(ptsFrom(m,450), faceMat)) }
+  // 刻度+中心
+  const sp = []; sp.push({g:new THREE.SphereGeometry(0.14,16,16), n:250})
+  for (let i=0; i<12; i++) { const a=(i/12)*Math.PI*2; const s=new THREE.SphereGeometry(i%3===0?0.09:0.05,8,8); s.translate(Math.cos(a)*2.4, Math.sin(a)*2.4,0); sp.push({g:s,n:i%3===0?120:50}) }
+  { const t=sp.reduce((s,x)=>s+x.n,0); const p=new Float32Array(t*3); let o=0; for (const {g,n} of sp) { const sg=ptsFrom(g,n); p.set(sg.getAttribute('position').array, o*3); o+=n } const g=new THREE.BufferGeometry(); g.setAttribute('position',new THREE.BufferAttribute(p,3)); faceGroup.add(new THREE.Points(g, faceMat)) }
 
-  // 时针（独立子节点 0）
-  { const h = new THREE.BoxGeometry(0.06, 1.6, 0.06, 2, 14, 2); h.translate(0,0.8,0); faceGroup.add(new THREE.Points(ptsFrom(h, 400), faceMat)) }
-  // 分针（独立子节点 1）
-  { const m = new THREE.BoxGeometry(0.04, 2.2, 0.04, 2, 18, 2); m.translate(0,1.1,0); faceGroup.add(new THREE.Points(ptsFrom(m, 500), faceMat)) }
-
-  // 刻度 + 中心合并为一个子节点
-  const staticParts = []
-  staticParts.push({ g: new THREE.SphereGeometry(0.15, 20, 20), n: 300 })
-  for (let i = 0; i < 12; i++) {
-    const a = (i/12)*Math.PI*2
-    const s = new THREE.SphereGeometry(i%3===0?0.1:0.05, 10, 10)
-    s.translate(Math.cos(a)*2.6, Math.sin(a)*2.6, 0)
-    staticParts.push({g:s, n: i%3===0?150:60})
-  }
-  {
-    const total = staticParts.reduce((s,x)=>s+x.n,0)
-    const pos = new Float32Array(total*3); let off=0
-    for (const {g,n} of staticParts) { const sg = ptsFrom(g,n); pos.set(sg.getAttribute('position').array, off*3); off+=n }
-    const geo = new THREE.BufferGeometry(); geo.setAttribute('position', new THREE.BufferAttribute(pos, 3))
-    faceGroup.add(new THREE.Points(geo, faceMat))
-  }
-
-  // ── 鼠标 ──
+  // 鼠标
   let mx=0,my=0,tx=0,ty=0
-  window.addEventListener('mousemove', e=>{ tx=(e.clientX/innerWidth-0.5)*2; ty=(e.clientY/innerHeight-0.5)*2 })
+  const onMove = e => { tx=(e.clientX/innerWidth-0.5)*2; ty=(e.clientY/innerHeight-0.5)*2 }
+  window.addEventListener('mousemove', onMove)
 
-  // ── 动画 ──
-  const clock = new THREE.Clock()
+  const clk = new THREE.Clock()
   function loop() {
-    requestAnimationFrame(loop)
-    const t = clock.getElapsedTime()
-    mx += (tx-mx)*0.04; my += (ty-my)*0.04
+    animId = requestAnimationFrame(loop)
+    const t = clk.getElapsedTime()
+    mx+=(tx-mx)*0.03; my+=(ty-my)*0.03
 
-    // 环组：各自绕不同轴转
-    ringGroup.children.forEach((child, i) => {
-      if (i===0) child.rotation.z += 0.003
-      else if (i===1) child.rotation.x += 0.004
-      else child.rotation.y += 0.005
+    ringGroup.children.forEach((c,i)=>{
+      c.rotation.x += 0.0015
+      c.rotation.y += 0.002
+      c.rotation.z += 0.001
     })
-    ringGroup.rotation.x += (my*0.25 - ringGroup.rotation.x)*0.03
-    ringGroup.rotation.y += (-mx*0.2 - ringGroup.rotation.y)*0.03
+    ringGroup.rotation.x += (my*0.2 - ringGroup.rotation.x)*0.02
+    ringGroup.rotation.y += (-mx*0.15 - ringGroup.rotation.y)*0.02
 
-    // 表盘组：XY 平面内，指针转 + 整体微倾
-    // 时针：12s 一圈，分针：3s 一圈
-    faceGroup.children[0].rotation.z = t * 0.52  // ~12s
-    faceGroup.children[1].rotation.z = t * 2.09  // ~3s
-    faceGroup.rotation.x += (my*0.15 - faceGroup.rotation.x)*0.03
-    faceGroup.rotation.y += (-mx*0.1 - faceGroup.rotation.y)*0.03
+    // 指针：~30s / ~8s 一圈
+    faceGroup.children[0].rotation.z = t * 0.21
+    faceGroup.children[1].rotation.z = t * 0.78
+    faceGroup.rotation.x += (my*0.12 - faceGroup.rotation.x)*0.02
+    faceGroup.rotation.y += (-mx*0.08 - faceGroup.rotation.y)*0.02
 
     renderer.render(scene, cam)
   }
   loop()
 
-  window.addEventListener('resize', () => {
-    const h = innerHeight * 0.67
-    cam.aspect = innerWidth / h; cam.updateProjectionMatrix()
-    renderer.setSize(innerWidth, h)
-  })
+  const onResize = () => {
+    const w = innerWidth * 0.67
+    cam.aspect = w / innerHeight; cam.updateProjectionMatrix()
+    renderer.setSize(w, innerHeight)
+  }
+  window.addEventListener('resize', onResize)
+})
+
+onUnmounted(() => {
+  const canvas = document.getElementById('hero-clock-canvas')
+  if (canvas) canvas.style.display = 'none'
+  if (animId) cancelAnimationFrame(animId)
 })
 </script>

@@ -6,6 +6,8 @@ export default defineConfig({
   lang: 'zh-CN',
   base: '/apptimer/',
 
+  appearance: 'dark',
+
   themeConfig: {
     logo: null,
 
