@@ -30,7 +30,11 @@ html { scroll-behavior: smooth; }
   position: fixed;
   z-index: 0; pointer-events: none;
   transition: all 0.7s cubic-bezier(0.4, 0, 0.2, 1);
-  /* 默认：文档页右下角 */
+  opacity: 0; /* 初始不可见，防闪 */
+}
+
+/* 文档页右下角 */
+body.is-doc #hero-clock-canvas {
   right: 1.5rem; bottom: 1.5rem;
   width: 220px; height: 220px;
   left: auto; top: auto;
@@ -46,6 +50,7 @@ body.is-home #hero-clock-canvas {
   width: 67vw; height: 100vh;
   opacity: 1;
   border-radius: 0;
+  transform: none;
 }
 
 /* 源代码：正中 */

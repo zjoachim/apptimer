@@ -81,9 +81,11 @@ export default {
           renderer.setSize(r.width, r.height)
         }
       }
-      updateSize()
+      // 等 CSS 挂上后再取尺寸
+      requestAnimationFrame(() => requestAnimationFrame(updateSize))
       window.addEventListener('resize', updateSize)
       canvas.addEventListener('transitionend', updateSize)
+      new ResizeObserver(updateSize).observe(canvas)
 
       const clk = new THREE.Clock()
       ;(function loop() {
