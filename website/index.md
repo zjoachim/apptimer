@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: 下载
-      link: /apptimer/AppTimer.exe
+      link: /AppTimer.exe
     - theme: alt
       text: 使用指南
       link: /guide

@@ -4,7 +4,7 @@ export default defineConfig({
   title: 'AppTimer',
   description: 'Windows 程序使用时间追踪器',
   lang: 'zh-CN',
-  base: '/apptimer/',
+  base: '/',
 
   head: [['link', { rel: 'icon', href: '/apptimer/favicon.svg' }]],
 
@@ -30,7 +30,7 @@ export default defineConfig({
       { text: '反馈', link: 'https://github.com/zjoachim/apptimer/issues' },
       {
         text: '下载',
-        link: '/apptimer/AppTimer.exe',
+        link: '/AppTimer.exe',
       },
     ],
 

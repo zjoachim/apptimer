@@ -10,3 +10,6 @@ website/.vitepress/dist/
 成品/
 源代码/
 终端报错.txt
+
+# Local Netlify folder
+.netlify

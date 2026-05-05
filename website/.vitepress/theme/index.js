@@ -7,7 +7,7 @@ export default {
     if (typeof window === 'undefined') return
 
     function isHome() {
-      return location.pathname === '/apptimer/' || location.pathname === '/apptimer/index.html'
+      return location.pathname === '/' || location.pathname === '/index.html'
     }
     function toggleCanvas() {
       const c = document.getElementById('hero-clock-canvas')

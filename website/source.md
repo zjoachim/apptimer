@@ -13,7 +13,7 @@ onMounted(async () => {
   if (!btn) return
   btn.onclick = async () => {
     try {
-      const res = await fetch('/apptimer/app_timer.py')
+      const res = await fetch('/app_timer.py')
       const text = await res.text()
       await navigator.clipboard.writeText(text)
       msg.textContent = '已复制'
