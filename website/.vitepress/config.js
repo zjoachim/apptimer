@@ -6,7 +6,7 @@ export default defineConfig({
   lang: 'zh-CN',
   base: '/',
 
-  head: [['link', { rel: 'icon', href: '/apptimer/favicon.svg' }]],
+  head: [['link', { rel: 'icon', href: '/favicon.svg' }]],
 
   appearance: 'dark',
 
