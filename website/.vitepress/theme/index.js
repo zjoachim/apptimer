@@ -6,13 +6,16 @@ export default {
   enhanceApp({ router }) {
     if (typeof window === 'undefined') return
 
-    function toggleCanvas(path) {
+    function isHome() {
+      return location.pathname === '/apptimer/' || location.pathname === '/apptimer/index.html'
+    }
+    function toggleCanvas() {
       const c = document.getElementById('hero-clock-canvas')
-      if (c) c.style.display = (path === '/') ? 'block' : 'none'
+      if (c) c.style.display = isHome() ? 'block' : 'none'
     }
 
     // 初始设置
-    setTimeout(() => toggleCanvas(router.route.path), 50)
+    setTimeout(() => toggleCanvas(), 50)
 
     // 页面切换过渡 + 画布显隐
     router.onBeforeRouteChange = () => {
@@ -27,9 +30,9 @@ export default {
           el.style.opacity = '1'; el.style.transform = 'translateY(0)'
         })
       }
-      toggleCanvas(to)
+      toggleCanvas()
       // 非首页恢复滚动
-      if (to !== '/') {
+      if (!isHome()) {
         document.documentElement.style.overflow = ''
         document.body.style.overflow = ''
       }
@@ -50,8 +53,8 @@ export default {
       canvas.id = 'hero-clock-canvas'
       canvas.style.display = 'block'
       document.body.prepend(canvas)
-      // 50ms 后根据路由修正
-      setTimeout(() => { canvas.style.display = (router.route.path === '/') ? 'block' : 'none' }, 100)
+      // 根据实际 URL 修正
+      setTimeout(() => { canvas.style.display = isHome() ? 'block' : 'none' }, 100)
 
       function ptsFrom(geo, n) {
         const src = geo.getAttribute('position')
