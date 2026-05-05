@@ -43,18 +43,24 @@ export default {
 
     import('https://unpkg.com/three@0.160.0/build/three.module.js').then(THREE => {
       const scene = new THREE.Scene()
-      const cam = new THREE.PerspectiveCamera(50, (innerWidth*0.67)/innerHeight, 0.5, 80)
+      const cam = new THREE.PerspectiveCamera(50, 1, 0.5, 80)
       cam.position.set(0, 0, 10)
 
       const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true })
-      renderer.setSize(innerWidth*0.67, innerHeight)
-      renderer.setPixelRatio(Math.min(devicePixelRatio, 2))
       const canvas = renderer.domElement
       canvas.id = 'hero-clock-canvas'
       canvas.style.display = 'block'
       document.body.prepend(canvas)
-      // 根据实际 URL 修正
-      setTimeout(() => { canvas.style.display = isHome() ? 'block' : 'none' }, 100)
+
+      function updateSize() {
+        const w = canvas.clientWidth || innerWidth * 0.67
+        const h = canvas.clientHeight || innerHeight
+        renderer.setSize(w, h, false)
+        cam.aspect = w / Math.max(h, 1)
+        cam.updateProjectionMatrix()
+      }
+      updateSize()
+      setTimeout(() => { canvas.style.display = isHome() ? 'block' : 'none'; updateSize() }, 100)
 
       function ptsFrom(geo, n) {
         const src = geo.getAttribute('position')
@@ -94,7 +100,7 @@ export default {
         faceGroup.children[1].rotation.z = t*0.78
         renderer.render(scene, cam)
       })()
-      window.addEventListener('resize', () => { const w = innerWidth*0.67; cam.aspect = w/innerHeight; cam.updateProjectionMatrix(); renderer.setSize(w, innerHeight) })
+      window.addEventListener('resize', updateSize)
     })
   }
 }

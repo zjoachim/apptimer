@@ -60,19 +60,8 @@ hero:
   .VPHero .name { font-size: 1.8rem !important; }
   .VPHero .text { font-size: 1rem !important; white-space: normal !important; margin-left: 0 !important; }
   .VPHero .tagline { font-size: 0.8rem !important; }
-
-  .feature-list { margin-left: 0 !important; width: 100vw !important; padding: 2rem 1.5rem 4rem; }
 }
 </style>
-
-<div class="feature-list">
-<div class="item"><div class="idx">01</div><h3>自动追踪</h3><p>后台静默运行，检测活动窗口，离座自动暂停</p></div>
-<div class="item"><div class="idx">02</div><h3>程序分类</h3><p>工作、学习、娱乐、社交、开发、设计等标签</p></div>
-<div class="item"><div class="idx">03</div><h3>日报周报月报</h3><p>按日期组织数据，自动生成报表和趋势对比</p></div>
-<div class="item"><div class="idx">04</div><h3>饼图 + 柱状图</h3><p>内置可视化图表，占比趋势一目了然</p></div>
-<div class="item"><div class="idx">05</div><h3>目标 + 提醒</h3><p>每日使用上限，超时弹窗，连续使用休息提示</p></div>
-<div class="item"><div class="idx">06</div><h3>CSV 导出</h3><p>一键导出数据，Excel 直接打开分析</p></div>
-</div>
 
 <script setup>
 import { onMounted, onUnmounted } from 'vue'
