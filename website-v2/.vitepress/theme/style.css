@@ -1,0 +1,48 @@
+/* ── 鹰角风：极简暗底 ── */
+:root {
+  --vp-c-bg: #08080d;
+  --vp-c-bg-soft: #0e0e16;
+  --vp-c-text-1: rgba(255,255,255,0.85);
+  --vp-c-text-2: rgba(255,255,255,0.45);
+  --vp-c-brand-1: #fff;
+  --vp-c-brand-2: #ccc;
+  --vp-c-brand-3: #fff;
+  --vp-button-brand-bg: rgba(255,255,255,0.08);
+  --vp-button-brand-border: 1px solid rgba(255,255,255,0.15);
+  --vp-button-brand-hover-bg: rgba(255,255,255,0.15);
+  --vp-font-family-base: 'Inter','PingFang SC','Microsoft YaHei',sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+.VPNavBar { border-bottom: 1px solid rgba(255,255,255,0.05); backdrop-filter: blur(12px); }
+.VPNavBarTitle .title { font-weight: 300; letter-spacing: 0.06em; font-size: 0.95rem; }
+.VPNavBarSearch { display: none !important; }
+.VPNavBarAppearance { display: none !important; }
+
+.VPContent { transition: opacity 0.25s ease, transform 0.25s ease; }
+
+.vp-doc { max-width: none !important; }
+.vp-doc h1 { font-weight: 300; letter-spacing: 0.04em; }
+.vp-doc h2 { font-weight: 300; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; }
+
+/* ── 移动端适配 ── */
+@media (max-width: 768px) {
+  #hero-clock-canvas { display: none; }
+
+  .VPHero, .VPFeatures, .feature-list {
+    margin-left: 0 !important;
+    width: 100vw !important;
+  }
+  .VPHero {
+    height: auto; min-height: 100vh;
+    padding: 2rem 1.5rem;
+  }
+  .VPHero .name { font-size: 1.8rem !important; }
+  .VPHero .text { font-size: 1rem !important; white-space: normal; }
+  .VPHero .tagline { font-size: 0.8rem !important; }
+
+  .feature-list { padding: 2rem 1.5rem 4rem; }
+
+  .vp-doc { padding: 0 1rem; }
+  .vp-doc h1 { font-size: 1.4rem; }
+}

@@ -1,15 +1,23 @@
+# Local Netlify folder
+.netlify
+
+# Dependencies
 node_modules/
 __pycache__/
-.claude/
-.mcp.json
+
+# Build artifacts
 build/
 dist/
 *.spec
-website/.vitepress/cache/
-website/.vitepress/dist/
-成品/
-源代码/
-终端报错.txt
 
-# Local Netlify folder
-.netlify
+# IDE
+.claude/
+.mcp.json
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+终端报错.txt
