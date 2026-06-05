@@ -51,6 +51,8 @@ export default {
       canvas.id = 'hero-clock-canvas'
       canvas.style.display = 'block'
       document.body.prepend(canvas)
+      // 隐藏骨架屏
+      document.querySelector('.VPHome')?.classList.add('skeleton-loaded')
 
       function updateSize() {
         const w = canvas.clientWidth || innerWidth * 0.67

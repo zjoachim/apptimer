@@ -29,7 +29,7 @@ hero:
   content: '';
   position: fixed; left: 0; top: 0;
   width: 67vw; height: 100vh;
-  z-index: -1;
+  z-index: 0;
   background:
     radial-gradient(circle at 50% 50%, transparent 28%, rgba(255,255,255,0.12) 29%, rgba(255,255,255,0.12) 30.5%, transparent 31%),
     linear-gradient(55deg, transparent 49.5%, rgba(255,255,255,0.1) 49.5%, rgba(255,255,255,0.1) 50.5%, transparent 50.5%),
@@ -38,6 +38,9 @@ hero:
   background-position: center;
   background-repeat: no-repeat;
   animation: skeleton-breathe 1.5s ease-in-out infinite;
+}
+.VPHome.skeleton-loaded::before {
+  display: none;
 }
 @keyframes skeleton-breathe {
   0%, 100% { opacity: 0.3; }
