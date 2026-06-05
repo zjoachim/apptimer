@@ -24,6 +24,31 @@ hero:
   --vp-home-hero-name-background: -webkit-linear-gradient(120deg, #aaa, #fff);
 }
 
+/* 骨架屏：Three.js 加载前显示时钟轮廓呼吸动画 */
+.VPHome::before {
+  content: '';
+  position: fixed; left: 0; top: 0;
+  width: 67vw; height: 100vh;
+  z-index: 0;
+  background:
+    radial-gradient(circle at 50% 50%, transparent 28%, rgba(255,255,255,0.12) 29%, rgba(255,255,255,0.12) 30.5%, transparent 31%),
+    linear-gradient(55deg, transparent 49.5%, rgba(255,255,255,0.1) 49.5%, rgba(255,255,255,0.1) 50.5%, transparent 50.5%),
+    linear-gradient(0deg, transparent 49.5%, rgba(255,255,255,0.08) 49.5%, rgba(255,255,255,0.08) 50.5%, transparent 50.5%);
+  background-size: 100% 100%, 60% 60%, 50% 50%;
+  background-position: center;
+  background-repeat: no-repeat;
+  animation: skeleton-breathe 1.5s ease-in-out infinite;
+}
+@keyframes skeleton-breathe {
+  0%, 100% { opacity: 0.3; }
+  50% { opacity: 0.6; }
+}
+@media (max-width: 768px) {
+  .VPHome::before {
+    width: 100vw; height: 45vh;
+  }
+}
+
 #hero-clock-canvas {
   position: fixed; left: 0; top: 0;
   width: 67vw; height: 100vh;

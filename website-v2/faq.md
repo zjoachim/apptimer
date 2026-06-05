@@ -41,3 +41,7 @@ PyInstaller 打包的 exe 可能被误报。可加入白名单，或直接用 Py
 ## Edge 没装能用吗？
 
 v2 优先使用 Edge，也支持 Chrome。如果都没有，自动用默认浏览器打开。
+
+## Edge 下载时提示"通常不会下载"怎么办？
+
+这是 Edge 对未签名 exe 的正常安全提示，不是病毒。点击底部弹窗的「**保留**」→「**仍然保留**」即可。如果担心安全性，可以在 [GitHub 仓库](https://github.com/zjoachim/apptimer) 直接下载源码用 Python 运行。
