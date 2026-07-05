@@ -4,8 +4,8 @@ Windows 程序使用时间追踪器。自动记录每个程序的使用时长，
 
 ## 下载
 
-- [官网下载](https://zjoachim.github.io/apptimer/)
-- [备用地址](https://zjoachim.github.io/apptimer/)
+- [GitHub Pages](https://zjoachim.github.io/apptimer/)
+- [Netlify](https://apptimer-win.netlify.app/)
 
 支持 Windows 10 / 11，无需安装，双击即用。
 
