@@ -96,6 +96,39 @@ class UsageTracker:
         self._load_json(self.categories_file, "categories", self.categories)
         self._load_json(self.goals_file, "goals", self.goals)
         self._load_settings()
+        self._reconcile_cumulative()
+
+    def _reconcile_cumulative(self):
+        """校验累计数据完整性，若丢失则从每日文件重建"""
+        # 从所有每日文件汇总真实累计
+        real = {}
+        for d in self.data_dir.iterdir():
+            if not d.is_dir() or d.name == self.today_str:
+                continue
+            data_file = d / "数据.json"
+            if not data_file.exists():
+                continue
+            try:
+                with open(data_file, "r", encoding="utf-8") as f:
+                    usage = json.load(f).get("usage", {})
+                for app, sec in usage.items():
+                    if app not in self.ignore_list:
+                        real[app] = real.get(app, 0) + sec
+            except Exception:
+                continue
+        # 加上今日数据
+        for app, sec in self.today_usage.items():
+            real[app] = real.get(app, 0) + sec
+        # 对比：累计文件丢失超过 10% 则重建
+        file_total = sum(self.cumulative_usage.values())
+        real_total = sum(real.values())
+        if real_total > 0 and file_total < real_total * 0.9:
+            logging.warning(f"累计数据不完整（文件 {file_total/3600:.1f}h，实际 {real_total/3600:.1f}h），正在重建...")
+            self.cumulative_usage.clear()
+            self.cumulative_usage.update(real)
+            with open(self.cumulative_file, "w", encoding="utf-8") as f:
+                json.dump({"cumulative": self.cumulative_usage}, f, ensure_ascii=False, indent=2)
+            logging.info(f"累计数据已重建: {real_total/3600:.1f}小时, {len(real)}个程序")
 
     def _load_json(self, path, key, target, filter_ignore=False):
         if path.exists():
