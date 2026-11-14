@@ -56,3 +56,7 @@ v3/build/
 杂/ppt-demo/
 v3/dist*/
 v3/build*/
+
+# 只推送 v1/v2/v3：以下目录只在本地
+web/
+杂/
