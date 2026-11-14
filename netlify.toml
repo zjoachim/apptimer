@@ -1,0 +1,7 @@
+[build]
+  base = "website-v2"
+  command = "npm run build"
+  publish = ".vitepress/dist"
+
+[build.environment]
+  NODE_VERSION = "24"
