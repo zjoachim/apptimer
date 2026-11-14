@@ -4,13 +4,14 @@
 
 AppTimer 是便携式应用：不用安装、不用管理员权限、不写注册表（除非你自己打开「开机自启」）。
 
-1. 下载 `AppTimer-v3.exe`（约 31MB）
-2. 放到任意文件夹，双击运行
+1. 下载 `AppTimer-v3.zip`（约 31MB）
+2. 解压出 `AppTimer-v3.exe`，放到任意文件夹
+3. 双击运行
 
 首次启动会把运行库解包到系统临时目录，需要一两秒，之后就快了。关闭窗口不会退出程序，它会收进托盘继续计时；要真正退出，用顶栏的「退出」或托盘右键菜单。
 
-::: tip 单文件版 / 便携目录版
-单文件版 `AppTimer-v3.exe` 双击即用，不需要解压。如果你更在意启动速度，也可以下 `AppTimer-v3.zip`：那是目录版，解压后运行里面的 `AppTimer.exe`，启动不需要解包。
+::: tip 为什么发 zip 不发 exe
+程序没有代码签名。直接从网页下载 `.exe` 时，Edge 会弹「通常不会下载」的拦截提示；压缩包不会触发，所以打成 zip 分发，解开就是一个 exe。
 :::
 
 ::: tip 系统要求
@@ -108,8 +109,7 @@ v3 常驻内存约 50MB，v2 因为要跑一个 WebView2 子进程，实测约 3
 
 下载入口：
 
-- **v3（当前，单文件）**：`AppTimer-v3.exe`
-- **v3 便携目录版**：`AppTimer-v3.zip`（解压后运行，启动更快）
+- **v3（当前）**：`AppTimer-v3.zip`（解压得到 `AppTimer-v3.exe`）
 - **v2**：`AppTimer-v2.exe`（Win11）
 - **v1**：`AppTimer-v1.exe`（Win10）
 - 历史版本都在 [GitHub Releases](https://github.com/zjoachim/apptimer/releases)

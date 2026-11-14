@@ -5,11 +5,11 @@ title: AppTimer
 hero:
   name: AppTimer
   text: 清楚你的时间去哪了
-  tagline: 单文件双击即用，9 个页面，常驻内存约 50MB
+  tagline: 解压即用，9 个页面，常驻内存约 50MB
   actions:
     - theme: brand
       text: 下载（Windows 10/11）
-      link: AppTimer-v3.exe
+      link: AppTimer-v3.zip
     - theme: alt
       text: 使用指南
       link: /guide

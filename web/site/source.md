@@ -74,7 +74,7 @@ py -3.14 -m PyInstaller v3\AppTimer.spec --noconfirm \
     --distpath v3\dist-onefile --workpath v3\build-onefile   :: 单文件版
 ```
 
-对外发的是单文件版 `v3\dist-onefile\AppTimer.exe`（约 31MB，双击即用）；目录版 `v3\dist\AppTimer\`（约 63MB，压缩后 31MB）留作启动更快的便携版本。
+对外发的是单文件版 `v3\dist-onefile\AppTimer.exe`，装进 `AppTimer-v3.zip` 再分发：exe 没有代码签名，网页直接下发会被浏览器拦一道，压缩包不触发。
 
 ## 上一代
 
