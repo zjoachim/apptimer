@@ -46,13 +46,70 @@ def connect(path):
     cols = {row[1] for row in conn.execute("PRAGMA table_info(app)")}
     if "alias" not in cols:
         conn.execute("ALTER TABLE app ADD COLUMN alias TEXT NOT NULL DEFAULT ''")
-    conn.execute("PRAGMA user_version=2")
+    _dedupe_apps(conn)
+    conn.execute("CREATE UNIQUE INDEX IF NOT EXISTS idx_app_name_nocase "
+                 "ON app(name COLLATE NOCASE)")
+    conn.execute("PRAGMA user_version=3")
     conn.commit()
     return conn
 
 
+def _total(conn, app_id):
+    row = conn.execute("SELECT total_seconds FROM app WHERE id=?", (app_id,)).fetchone()
+    return int(row[0]) if row else 0
+
+
+def _dedupe_apps(conn):
+    """把只有大小写不同的同一程序合并成一条（QuickLook.exe / quicklook.exe 这种）。
+
+    之前按进程名原样入库，同一个程序偶尔以不同大小写出现，就变成两行、时长各半。
+    """
+    groups = {}
+    for app_id, name in conn.execute("SELECT id, name FROM app").fetchall():
+        groups.setdefault(name.lower(), []).append(app_id)
+
+    merged = 0
+    for ids in groups.values():
+        if len(ids) < 2:
+            continue
+        # 主行按总时长选；显示名优先用大小写更"正式"的那个（QuickLook.exe 优于 quicklook.exe）
+        names = dict(conn.execute(
+            "SELECT id, name FROM app WHERE id IN (%s)" % ",".join("?" * len(ids)), ids).fetchall())
+        ids.sort(key=lambda i: (-_total(conn, i), -sum(1 for c in names[i] if c.isupper())))
+        keep, rest = ids[0], ids[1:]
+        best = max(ids, key=lambda i: sum(1 for c in names[i] if c.isupper()))
+        if names[best] != names[keep]:
+            conn.execute("UPDATE app SET name=? WHERE id=?", (names[best], keep))
+        for old in rest:
+            for date, sec in conn.execute(
+                    "SELECT date, seconds FROM day WHERE app_id=?", (old,)).fetchall():
+                conn.execute(
+                    "INSERT INTO day(app_id, date, seconds) VALUES(?,?,?) "
+                    "ON CONFLICT(app_id, date) DO UPDATE SET seconds=MIN(?, seconds+excluded.seconds)",
+                    (keep, date, sec, DAY_CAP))
+            for ts, sec in conn.execute(
+                    "SELECT ts, seconds FROM hour WHERE app_id=?", (old,)).fetchall():
+                conn.execute(
+                    "INSERT INTO hour(app_id, ts, seconds) VALUES(?,?,?) "
+                    "ON CONFLICT(app_id, ts) DO UPDATE SET seconds=MIN(?, seconds+excluded.seconds)",
+                    (keep, ts, sec, HOUR_CAP))
+            conn.execute("UPDATE app SET total_seconds = total_seconds + ? WHERE id=?",
+                         (_total(conn, old), keep))
+            conn.execute(
+                "UPDATE app SET alias = CASE WHEN alias='' THEN "
+                "(SELECT alias FROM app WHERE id=?) ELSE alias END, "
+                "category = CASE WHEN category='' THEN "
+                "(SELECT category FROM app WHERE id=?) ELSE category END WHERE id=?",
+                (old, old, keep))
+            conn.execute("DELETE FROM day WHERE app_id=?", (old,))
+            conn.execute("DELETE FROM hour WHERE app_id=?", (old,))
+            conn.execute("DELETE FROM app WHERE id=?", (old,))
+            merged += 1
+    return merged
+
+
 def _app_id(conn, name, exe=""):
-    row = conn.execute("SELECT id FROM app WHERE name=?", (name,)).fetchone()
+    row = conn.execute("SELECT id FROM app WHERE name=? COLLATE NOCASE", (name,)).fetchone()
     if row:
         if exe:
             conn.execute("UPDATE app SET exe=? WHERE id=? AND exe=''", (exe, row[0]))
@@ -112,6 +169,7 @@ def exes(conn):
 
 
 def set_alias(conn, name, alias):
+    """按名字（不分大小写）设置显示别名。"""
     conn.execute("UPDATE app SET alias = ? WHERE name = ?", (alias or "", name))
     conn.commit()
 
