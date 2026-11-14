@@ -23,3 +23,36 @@ Thumbs.db
 # Logs
 *.log
 终端报错.txt
+
+# 素材 / 剪辑 / 渲染产物（体积大，且被 Premiere、Blender 工程按路径引用，保持原地存放）
+Adobe Premiere Pro Audio Previews/
+Adobe Premiere Pro Auto-Save/
+*.mp4
+*.mov
+*.blend
+*.blend1
+*.prproj
+渲染成品/
+渲染成品1/
+产品截图/
+网页截图/
+佐证材料/
+佐证材料.zip
+Tai（同定位开源项目）/
+研究报告.docx
+ppt-demo/*.pptx
+ppt-demo/**/*.png
+杂/v3-proto/*.png
+杂/v3-proto/*.gif
+
+# 临时
+.mimocode/
+# v3 打包产物
+v3/dist/
+v3/build/
+# 大文件/渲染产物（不入库）
+杂/片头/
+杂/v3-proto/
+杂/ppt-demo/
+v3/dist*/
+v3/build*/

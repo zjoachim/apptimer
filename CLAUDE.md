@@ -4,22 +4,22 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## 项目概述
 
-AppTimer 是一个 Windows 程序使用时间追踪器，有两个版本：
-- **v1**：单文件 Tkinter 应用（`apptimer/app_timer.py`），Python 3.14
+AppTimer 是一个 Windows 程序使用时间追踪器，有两个历史版本（现役 v3 见 `v3/`）：
+- **v1**：单文件 Tkinter 应用（`v1/apptimer/app_timer.py`），Python 3.14
 - **v2**：pywebview + Vue3 + Tailwind + ECharts，Python 3.14（pythonnet 3.1.0+ 已支持）
 
 ## 目录结构
 
 | 目录 | 用途 |
 |------|------|
-| `apptimer/` | v1 源码（单文件 `app_timer.py` + `clock.ico`） |
+| `v1/apptimer/` | v1 源码（单文件 `app_timer.py` + `clock.ico`） |
 | `v2/frontend/` | v2 前端源码（Vue3 + Vite + Tailwind） |
-| `v2-app/` | v2 完整应用（后端 + 前端 dist + 打包配置） |
-| `v2-app/backend/` | v2 Python 后端（main.py, tracker.py, window_detect.py, startup.py） |
-| `v2-app/frontend/` | v2 前端副本（**打包用**，需从 `v2/frontend/` 同步） |
-| `website-v2/` | 项目官网（VitePress），通过 GitHub Pages 部署 |
+| `v2/app/` | v2 完整应用（后端 + 前端 dist + 打包配置） |
+| `v2/app/backend/` | v2 Python 后端（main.py, tracker.py, window_detect.py, startup.py） |
+| `v2/app/frontend/` | v2 前端副本（**打包用**，需从 `v2/frontend/` 同步） |
+| `web/site/` | 项目官网（VitePress），通过 GitHub Pages 部署 |
 
-**关键**：`v2/frontend/src/` 是前端源码，`v2-app/frontend/` 是打包用副本。修改前端后必须同步到 `v2-app/frontend/` 再重新构建。
+**关键**：`v2/frontend/src/` 是前端源码，`v2/app/frontend/` 是打包用副本。修改前端后必须同步到 `v2/app/frontend/` 再重新构建。
 
 ## 构建命令
 
@@ -32,28 +32,28 @@ npm run build        # 构建到 dist/
 
 ### v2 exe 打包
 ```bash
-# 1. 同步前端源码到 v2-app
-# （手动复制 v2/frontend/src/ 到 v2-app/frontend/src/）
+# 1. 同步前端源码到 v2/app
+# （手动复制 v2/frontend/src/ 到 v2/app/frontend/src/）
 
-# 2. 在 v2-app/frontend/ 构建
-cd v2-app/frontend
+# 2. 在 v2/app/frontend/ 构建
+cd v2/app/frontend
 npm run build
 
-# 3. 打包 exe（必须在 v2-app/ 目录执行）
-cd v2-app
+# 3. 打包 exe（必须在 v2/app/ 目录执行）
+cd v2/app
 py -3.14 -m PyInstaller AppTimer.spec --noconfirm
-# 输出: v2-app/dist/AppTimer.exe
+# 输出: v2/app/dist/AppTimer.exe
 ```
 
 ### 本地运行 v2（开发模式）
 ```bash
-cd v2-app
+cd v2/app
 py -3.14 run.py
 ```
 
 ### 网站
 ```bash
-cd website-v2
+cd web/site
 npm install
 npx vitepress dev     # 本地开发
 npx vitepress build --base /apptimer/  # 生产构建
@@ -116,8 +116,32 @@ npx vitepress build --base /apptimer/  # 生产构建
 
 ## 注意事项
 
-- PyInstaller 打包必须在 `v2-app/` 目录执行（spec 使用相对路径）
+- PyInstaller 打包必须在 `v2/app/` 目录执行（spec 使用相对路径）
 - `fpdf` 中文字体依赖 `C:\Windows\Fonts\msyh.ttc`（微软雅黑）
 - v2 exe 窗口固定 900×680，`resizable=False`
 - HTTP 服务器端口从 17778 开始，冲突自动 +1
 - `os._exit(0)` 用于强制退出（pywebview 事件循环可能不响应 `sys.exit()`）
+
+---
+
+## 旧会话整合（来源：D:\ai小项目成果 项目）
+
+> **说明**：以下内容从旧项目 `D:\ai小项目成果` 的 Claude 会话记忆中整合而来。
+> 旧项目已重命名为 `D:\apptimer`，原会话记录因文件夹重命名导致索引失效而丢失。
+> 整合时间：2026-08-19
+
+### 官网建设过程记录
+
+从零搭建了 AppTimer 的官方网站，部署在 Netlify：https://apptimer-win.netlify.app
+
+#### 技术栈
+- VitePress 静态站
+- Three.js 粒子点云 3D 时钟（CDN 动态加载）
+- Netlify 主力部署 + GitHub Pages 备线
+
+#### 关键踩坑
+- .gitignore 在 Windows 上容易被写为 UTF-16LE 编码，Git 不认，用 printf 写入 UTF-8 解决
+- VitePress 的 base 路径影响所有链接，GitHub Pages 需要 `/apptimer/`，Netlify 需要 `/`
+- Three.js CDN 导入需要配置 `build.rollupOptions.external` 避免 Vite 打包
+- 页面切换后画布消失：需要 route 监听 + `location.pathname` 判断（非 `router.route.path`，后者在 base 路径下不准确）
+- 移动端布局：flex column 让画布 relative 会挤下导航栏，用 position fixed + padding-top 文字定位稳定
