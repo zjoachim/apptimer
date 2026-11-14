@@ -108,8 +108,10 @@ v3/dist/      打包产物（不入库）/ build output (git-ignored)
 - Python 3.14，Tkinter 单画布 + Pillow 离屏合成（2× 超采样）
 - SQLite（WAL），三张表：`app` / `day` / `hour`
 - Win32 via ctypes：`SetWinEventHook` 前台窗口、Core Audio 音量、`Shell_NotifyIcon` 托盘、`SHGetFileInfo` 图标
-- 打包：PyInstaller（onedir）
+- 打包：PyInstaller。对外发单文件（onefile），装进 zip 分发；目录版（onedir）留作启动更快的备选
 
 ## 许可证 · License
 
-未声明开源协议，作者保留所有权利。/ No license specified; all rights reserved.
+本项目采用 **MIT 协议**。你可以自由使用、修改、分发，包括商业用途，只需保留版权声明与许可声明；软件按「现状」提供，作者不承担担保责任。完整文本见 [LICENSE](./LICENSE)。
+
+Released under the **MIT License**. You are free to use, modify and redistribute it, including commercially, as long as the copyright notice and this permission notice are kept. The software is provided "as is", without warranty of any kind. See [LICENSE](./LICENSE) for the full text.
