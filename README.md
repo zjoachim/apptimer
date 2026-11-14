@@ -112,6 +112,4 @@ v3/dist/      打包产物（不入库）/ build output (git-ignored)
 
 ## 许可证 · License
 
-本项目采用 **MIT 协议**。你可以自由使用、修改、分发，包括商业用途，只需保留版权声明与许可声明；软件按「现状」提供，作者不承担担保责任。完整文本见 [LICENSE](./LICENSE)。
-
-Released under the **MIT License**. You are free to use, modify and redistribute it, including commercially, as long as the copyright notice and this permission notice are kept. The software is provided "as is", without warranty of any kind. See [LICENSE](./LICENSE) for the full text.
+未声明开源协议，作者保留所有权利。/ No license specified; all rights reserved.
