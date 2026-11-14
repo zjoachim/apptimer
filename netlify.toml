@@ -1,5 +1,5 @@
 [build]
-  base = "website-v2"
+  base = "web/site"
   command = "npm run build"
   publish = ".vitepress/dist"
 

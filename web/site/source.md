@@ -76,4 +76,4 @@ v3\build.bat
 
 ## 上一代
 
-v2 是「Python HTTP 服务 + Vue 3 前端 + Edge 无边框窗口」的架构，源码留在仓库的 `v2/` 与 `v2-app/` 目录，本页不再展开。
+v2 是「Python HTTP 服务 + Vue 3 前端 + Edge 无边框窗口」的架构，源码留在仓库的 `v2/frontend/` 与 `v2/app/` 目录，本页不再展开。

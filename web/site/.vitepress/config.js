@@ -39,24 +39,6 @@ export default defineConfig({
       },
     ],
 
-    sidebar: {
-      '/guide': [
-        {
-          text: '使用指南',
-          items: [
-            { text: '安装与启动', link: '/guide#安装与启动' },
-            { text: '界面概览', link: '/guide#界面概览' },
-            { text: '计时与记录', link: '/guide#计时与记录' },
-            { text: '数据与报表', link: '/guide#数据与报表' },
-            { text: '分类与别名', link: '/guide#分类与别名' },
-            { text: '番茄钟与每日目标', link: '/guide#番茄钟与每日目标' },
-            { text: '设置与自启动', link: '/guide#设置与自启动' },
-            { text: '版本区别', link: '/guide#版本区别' },
-          ],
-        },
-      ],
-    },
-
     socialLinks: [],
 
     footer: {
