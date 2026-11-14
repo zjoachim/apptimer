@@ -31,9 +31,9 @@ export default defineConfig({
       {
         text: '下载',
         items: [
-          { text: '最新版（Windows 10/11）', link: '/AppTimer-v3.zip' },
-          { text: 'v2（Win11，旧版）', link: '/AppTimer-v2.exe' },
-          { text: 'v1（Win10，旧版）', link: '/AppTimer-v1.exe' },
+          { text: '最新版（Windows 10/11）', link: 'AppTimer-v3.zip' },
+          { text: 'v2（Win11，旧版）', link: 'AppTimer-v2.exe' },
+          { text: 'v1（Win10，旧版）', link: 'AppTimer-v1.exe' },
           { text: 'GitHub Releases', link: 'https://github.com/zjoachim/apptimer/releases' },
         ],
       },

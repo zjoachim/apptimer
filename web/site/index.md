@@ -9,7 +9,7 @@ hero:
   actions:
     - theme: brand
       text: 下载（Windows 10/11）
-      link: /AppTimer-v3.zip
+      link: AppTimer-v3.zip
     - theme: alt
       text: 使用指南
       link: /guide
