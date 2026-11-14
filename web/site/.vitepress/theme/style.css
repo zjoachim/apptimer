@@ -19,7 +19,7 @@ html { scroll-behavior: smooth; }
 .VPNavBarSearch { display: none !important; }
 .VPNavBarAppearance { display: none !important; }
 
-.VPContent { transition: opacity 0.25s ease, transform 0.25s ease; }
+.VPContent { transition: opacity 0.25s ease; }
 
 .vp-doc { max-width: none !important; }
 .vp-doc h1 { font-weight: 300; letter-spacing: 0.04em; }
@@ -45,16 +45,4 @@ html { scroll-behavior: smooth; }
 
   .vp-doc { padding: 0 1rem; }
   .vp-doc h1 { font-size: 1.4rem; }
-}
-/* ── 右侧目录（On this page）常驻：固定在右边，随阅读位置高亮 ── */
-@media (min-width: 1280px) {
-  .VPDoc .aside {
-    position: sticky;
-    top: calc(var(--vp-nav-height) + 24px);
-    align-self: flex-start;
-    max-height: calc(100vh - var(--vp-nav-height) - 48px);
-    overflow-y: auto;
-  }
-  .VPDocAsideOutline .outline-link { transition: color 0.2s ease; }
-  .VPDocAsideOutline .outline-link.active { font-weight: 400; }
 }

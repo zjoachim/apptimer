@@ -20,14 +20,15 @@ export default {
     // 页面切换过渡 + 画布显隐
     router.onBeforeRouteChange = () => {
       const el = document.querySelector('.VPContent')
-      if (el) { el.style.opacity = '0'; el.style.transform = 'translateY(4px)'; el.style.transition = 'none' }
+      // 只用不透明度做过渡：祖先一旦有 transform，position:fixed 的右侧目录会改以它为参照，跟着内容滚走
+      if (el) { el.style.opacity = '0'; el.style.transition = 'none' }
     }
     router.onAfterRouteChanged = (to) => {
       const el = document.querySelector('.VPContent')
       if (el) {
         requestAnimationFrame(() => {
-          el.style.transition = 'opacity 0.25s ease, transform 0.25s ease'
-          el.style.opacity = '1'; el.style.transform = 'translateY(0)'
+          el.style.transition = 'opacity 0.25s ease'
+          el.style.opacity = '1'
         })
       }
       toggleCanvas()
