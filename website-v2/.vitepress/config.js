@@ -2,7 +2,7 @@ import { defineConfig } from 'vitepress'
 
 export default defineConfig({
   title: 'AppTimer',
-  description: 'Vue 3 + ECharts 可视化，Edge 无边框窗口',
+  description: 'Windows 程序使用时间追踪器：按秒记录前台程序，数据只存本机',
   lang: 'zh-CN',
   base: '/',
 
@@ -28,8 +28,15 @@ export default defineConfig({
       { text: '更新日志', link: '/changelog' },
       { text: '源代码', link: '/source' },
       { text: '反馈', link: 'https://github.com/zjoachim/apptimer/issues' },
-      { text: '下载 v2', link: '/AppTimer-v2.exe' },
-      { text: '下载 v1', link: '/AppTimer-v1.exe' },
+      {
+        text: '下载',
+        items: [
+          { text: '最新版（Windows 10/11）', link: '/AppTimer-v3.zip' },
+          { text: 'v2（Win11，旧版）', link: '/AppTimer-v2.exe' },
+          { text: 'v1（Win10，旧版）', link: '/AppTimer-v1.exe' },
+          { text: 'GitHub Releases', link: 'https://github.com/zjoachim/apptimer/releases' },
+        ],
+      },
     ],
 
     sidebar: {
@@ -39,10 +46,12 @@ export default defineConfig({
           items: [
             { text: '安装与启动', link: '/guide#安装与启动' },
             { text: '界面概览', link: '/guide#界面概览' },
-            { text: '追踪面板', link: '/guide#追踪面板' },
-            { text: '分类标签', link: '/guide#分类标签' },
+            { text: '计时与记录', link: '/guide#计时与记录' },
             { text: '数据与报表', link: '/guide#数据与报表' },
+            { text: '分类与别名', link: '/guide#分类与别名' },
+            { text: '番茄钟与每日目标', link: '/guide#番茄钟与每日目标' },
             { text: '设置与自启动', link: '/guide#设置与自启动' },
+            { text: '版本区别', link: '/guide#版本区别' },
           ],
         },
       ],

@@ -5,17 +5,17 @@ title: AppTimer
 hero:
   name: AppTimer
   text: 清楚你的时间去哪了
-  tagline: Vue 3 + ECharts 可视化，Edge 无边框窗口，7 个功能标签页
+  tagline: 原生窗口，9 个页面，常驻内存约 50MB
   actions:
     - theme: brand
-      text: 下载 v2（Win11）
-      link: /AppTimer-v2.exe
-    - theme: alt
-      text: 下载 v1（Win10）
-      link: /AppTimer-v1.exe
+      text: 下载（Windows 10/11）
+      link: /AppTimer-v3.zip
     - theme: alt
       text: 使用指南
       link: /guide
+    - theme: alt
+      text: GitHub Releases
+      link: https://github.com/zjoachim/apptimer/releases
 ---
 
 <style>
