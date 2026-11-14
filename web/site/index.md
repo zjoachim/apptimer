@@ -4,7 +4,7 @@ title: AppTimer
 
 hero:
   name: AppTimer
-  text: 清楚你的时间去哪了
+  text: Windows程序使用时间追踪器
   tagline: 解压即用，9 个页面，常驻内存约 50MB
   actions:
     - theme: brand
