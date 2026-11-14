@@ -69,10 +69,12 @@ self._hook = user32.SetWinEventHook(EVENT_SYSTEM_FOREGROUND, EVENT_SYSTEM_FOREGR
 ## 打包
 
 ```bat
-v3\build.bat
+v3\build.bat                      :: 目录版，产物 v3\dist\AppTimer\
+py -3.14 -m PyInstaller v3\AppTimer.spec --noconfirm \
+    --distpath v3\dist-onefile --workpath v3\build-onefile   :: 单文件版
 ```
 
-产物是 `v3\dist\AppTimer\`（约 63MB），整个目录压缩分发。目录版的启动比单文件版快，也不用运行时自解压。
+对外发的是单文件版 `v3\dist-onefile\AppTimer.exe`（约 31MB，双击即用）；目录版 `v3\dist\AppTimer\`（约 63MB，压缩后 31MB）留作启动更快的便携版本。
 
 ## 上一代
 

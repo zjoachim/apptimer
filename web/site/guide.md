@@ -4,14 +4,13 @@
 
 AppTimer 是便携式应用：不用安装、不用管理员权限、不写注册表（除非你自己打开「开机自启」）。
 
-1. 下载 `AppTimer-v3.zip`（约 31MB，解压后约 63MB）
-2. 解压到任意文件夹，例如 `D:\AppTimer`
-3. 双击 `AppTimer.exe`
+1. 下载 `AppTimer-v3.exe`（约 31MB）
+2. 放到任意文件夹，双击运行
 
-关闭窗口不会退出程序，它会收进托盘继续计时；要真正退出，用顶栏的「退出」或托盘右键菜单。
+首次启动会把运行库解包到系统临时目录，需要一两秒，之后就快了。关闭窗口不会退出程序，它会收进托盘继续计时；要真正退出，用顶栏的「退出」或托盘右键菜单。
 
-::: tip 必须先解压
-压缩包里是目录版程序（`AppTimer.exe` 加一个 `_internal` 目录），直接在压缩包内双击会因为缺少依赖而打不开。
+::: tip 单文件版 / 便携目录版
+单文件版 `AppTimer-v3.exe` 双击即用，不需要解压。如果你更在意启动速度，也可以下 `AppTimer-v3.zip`：那是目录版，解压后运行里面的 `AppTimer.exe`，启动不需要解包。
 :::
 
 ::: tip 系统要求
@@ -99,7 +98,7 @@ Windows 10 与 Windows 11 都可以。程序是原生窗口，不依赖浏览器
 | | v1 | v2 | v3（当前） |
 |---|---|---|---|
 | 界面 | tkinter 单文件 | Vue 3 + ECharts，Edge 无边框窗口 | Python 自绘画布，原生窗口 |
-| 依赖 | 无 | WebView2 / Edge | 无，解压即用 |
+| 依赖 | 无 | WebView2 / Edge | 无，单文件双击即用 |
 | 页面 | 4 个 | 7 个 | 9 个 |
 | 导出 | CSV | CSV + PDF | PDF |
 | 数据位置 | 桌面 `程序使用记录` | 桌面 `程序使用记录` | `%LOCALAPPDATA%\AppTimer`，可自定义 |
@@ -109,7 +108,8 @@ v3 常驻内存约 50MB，v2 因为要跑一个 WebView2 子进程，实测约 3
 
 下载入口：
 
-- **v3（当前）**：`AppTimer-v3.zip`
+- **v3（当前，单文件）**：`AppTimer-v3.exe`
+- **v3 便携目录版**：`AppTimer-v3.zip`（解压后运行，启动更快）
 - **v2**：`AppTimer-v2.exe`（Win11）
 - **v1**：`AppTimer-v1.exe`（Win10）
 - 历史版本都在 [GitHub Releases](https://github.com/zjoachim/apptimer/releases)
