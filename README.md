@@ -44,27 +44,7 @@ The repository only tracks the three app versions — the website, media assets 
 
 ---
 
-## 快速开始 · Quick start
-
-### 直接运行源码 / Run from source
-
-```bat
-cd v3
-py -3.14 run.py
-```
-
-需要 Python 3.14 和 `Pillow`、`fpdf2`（导出 PDF 时才用到）。
-
-### 打包 exe / Build the executable
-
-```bat
-v3\build.bat
-```
-
-产物在 `v3\dist\AppTimer\`（目录版，约 63 MB），整个文件夹分发，双击 `AppTimer.exe` 运行。
-构建脚本同样支持调色板：`py -3.14 -m PyInstaller v3/AppTimer-onedir.spec --noconfirm`。
-
-### 数据位置 / Where the data lives
+## 数据位置 · Where the data lives
 
 | 内容 | 位置 |
 |---|---|
