@@ -79,3 +79,12 @@ py -3.14 -m PyInstaller v3\AppTimer.spec --noconfirm \
 ## 上一代
 
 v2 是「Python HTTP 服务 + Vue 3 前端 + Edge 无边框窗口」的架构，源码留在仓库的 `v2/frontend/` 与 `v2/app/` 目录，本页不再展开。
+
+## 许可证
+
+AppTimer **不是开源软件**，采用自定义许可：
+
+- **可以**：免费下载、安装、自用；原样分享官方安装包或官方下载链接（保留许可与版权声明）
+- **不可以**：商用（销售、捆绑、付费服务、企业内部生产性使用）、修改/反编译/反汇编、再发布源码或衍生版本、拿它的名称与图标给自己背书
+
+完整条款见仓库根目录的 [LICENSE](https://github.com/zjoachim/apptimer/blob/main/LICENSE)。程序内使用的第三方组件（Python、Pillow、fpdf2、PyInstaller 等）仍遵循各自的许可。

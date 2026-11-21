@@ -42,7 +42,7 @@ export default defineConfig({
     socialLinks: [],
 
     footer: {
-      message: 'Windows 程序使用时间追踪器',
+      message: 'Windows 程序使用时间追踪器 · 个人非商业免费使用',
       copyright: 'Copyright © 2026',
     },
 

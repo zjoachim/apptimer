@@ -92,4 +92,11 @@ v3/dist/      打包产物（不入库）/ build output (git-ignored)
 
 ## 许可证 · License
 
-未声明开源协议，作者保留所有权利。/ No license specified; all rights reserved.
+本项目采用**自定义许可**，不是开源协议：
+
+- **可以**：免费下载、安装、自用；原样分享官方安装包或官方下载链接（保留本许可与版权声明）
+- **不可以**：商用（销售、捆绑、付费服务、企业内部生产性使用）、修改/反编译/反汇编、再发布源码或衍生版本、拿它的名称与图标做背书
+
+第三方组件（Python、Pillow、fpdf2、PyInstaller 等）仍遵循各自的许可。完整条款见 [LICENSE](./LICENSE)。
+
+Custom license, **not** an open-source license: free for personal, non-commercial use, and the unmodified original package may be shared with this license kept. Commercial use, modification, decompilation and redistribution of the source or derivative versions are **not** permitted. See [LICENSE](./LICENSE).
